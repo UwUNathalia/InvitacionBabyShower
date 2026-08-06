@@ -543,58 +543,66 @@
     margin-top: 0.2rem;
   }
 
-  /* Dos espacios de foto (circulares) */
+  /* Dos fotos de los papás */
   .dual-photo-wrap{
     display: flex;
     justify-content: center;
-    align-items: flex-end;
-    gap: 1.2rem;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.3rem;
+    /* La foto derecha se desplaza con position:relative (no afecta el
+       alto del contenedor), así que se suma ese desplazamiento aquí
+       para que no se monte sobre el texto de abajo */
+    margin-bottom: 5.5rem;
+    flex-wrap: nowrap;
   }
 
+  /* Las fotos ya vienen recortadas en forma de "blob" orgánico
+     (PNG con transparencia), así que no se fuerza ningún marco
+     circular: solo se centran y se les da una sombra suave. */
   .circle-photo{
-    border-radius: 50%;
-    background: var(--rosa-suave);
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    font-size: 0.8rem;
-    color: #a97e73;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
-    border: 3px dashed var(--rosa-palo);
-    padding: 0.5rem;
-    overflow: hidden;
   }
 
   .circle-photo img{
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 10px 16px rgba(90,70,40,0.22));
   }
 
   .circle-photo.large{
-    width: 150px;
-    height: 150px;
+    width: 80%;
+    max-width: 350px;
+    min-width: 270px;
+    position: relative;
+    top: -2.6rem;
   }
 
   .circle-photo.small{
-    width: 110px;
-    height: 110px;
-    background: var(--azul-cielo);
-    border-color: #b9dbe8;
+    width: 70%;
+    max-width: 300px;
+    min-width: 250px;
+    position: relative;
+    top: 3.5rem;
   }
 
-  /* Bienvenida */
+  .welcome-text-wrap{
+    margin-bottom: 2rem;
+  }
+
+  /* Caja de texto (como una tarjetita) */
   .welcome-text{
     text-align: center;
     font-size: 1.1rem;
     line-height: 1.6;
-    max-width: 380px;
-    margin: 0 auto 2rem;
-    padding: 0 1rem;
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 1.4rem 1.3rem;
+    background: rgba(255, 250, 245, 0.88);
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(107, 74, 62, 0.12);
   }
 
   /* Confirmar asistencia (WhatsApp) */
@@ -838,25 +846,23 @@
     </div>
 
 
-    <!-- Dos espacios de foto: ecografía y padres -->
+    <!-- Dos fotos de los papás -->
     <div class="dual-photo-wrap">
       <div class="circle-photo large">
-        <!-- IMAGEN: foto ecografía -->
-        <!-- Reemplazar por: <img src="assets/foto-ecografia.jpg" alt="Ecografía"> -->
-        ESPACIO PARA FOTO 1<br>(Ecografía)
+        <img src="Imagenes/papis2-recortado.png" alt="Jeysson y Alejandra esperando a Julieta Zoé">
       </div>
       <div class="circle-photo small">
-        <!-- IMAGEN: foto de los padres -->
-        <!-- Reemplazar por: <img src="assets/foto-padres.jpg" alt="Jeysson y Alejandra"> -->
-        ESPACIO PARA FOTO 2<br>(Padres)
+        <img src="Imagenes/papis-recortado.png" alt="Jeysson y Alejandra">
       </div>
     </div>
 
 
     <!-- Texto de bienvenida -->
-    <p class="welcome-text">
-      ¡Tu presencia hará este día aún más especial! Esperamos compartir la alegría de la llegada de Julieta Zoé con todos ustedes.
-    </p>
+    <div class="welcome-text-wrap">
+      <p class="welcome-text">
+        ¡Tu presencia hará este día aún más especial! Esperamos compartir la alegría de la llegada de Julieta Zoé con todos ustedes.
+      </p>
+    </div>
 
 
     <!-- ============================================================
