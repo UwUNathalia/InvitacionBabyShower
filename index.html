@@ -730,6 +730,79 @@
     margin-bottom: 1.1rem;
   }
 
+  .rsvp-buttons{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 1.8rem;
+  }
+
+  /* Código del regalo */
+  .gift-code-text{
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-width: 340px;
+    margin: 0 auto 1rem;
+    color: var(--texto-cafe);
+  }
+
+  .gift-code-box{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .gift-code-input{
+    border: 2px solid var(--rosa-palo);
+    border-radius: 30px;
+    padding: 0.55rem 1.2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--texto-cafe);
+    background: var(--blanco-crema);
+    text-align: center;
+    width: 180px;
+    max-width: 60%;
+  }
+
+  .gift-code-input:focus{
+    outline: none;
+    border-color: var(--dorado-suave);
+  }
+
+  .btn-gift-code{
+    border: none;
+    border-radius: 30px;
+    padding: 0.55rem 1.4rem;
+    background: var(--rosa-palo);
+    color: var(--texto-cafe);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .btn-gift-code:hover{
+    background: var(--durazno);
+  }
+
+  .gift-code-result{
+    font-size: 0.95rem;
+    font-weight: 600;
+    min-height: 1.4em;
+  }
+
+  .gift-code-result.success{
+    color: var(--verde-oscuro);
+  }
+
+  .gift-code-result.error{
+    color: #b5605a;
+  }
+
   .btn-whatsapp{
     display: inline-flex;
     align-items: center;
@@ -998,10 +1071,31 @@
     ============================================================= -->
     <div class="rsvp-section">
       <p class="rsvp-title">¡Confírmanos que nos acompañarás!</p>
-      <a class="btn-whatsapp" href="https://wa.me/3125840081" target="_blank" rel="noopener noreferrer">
-        <img src="Imagenes/boton%20whatsapp.png" alt="WhatsApp">
-        Confírmale a papá aquí
-      </a>
+      <div class="rsvp-buttons">
+        <a class="btn-whatsapp" href="https://wa.me/3125840081" target="_blank" rel="noopener noreferrer">
+          <img src="Imagenes/boton%20whatsapp.png" alt="WhatsApp">
+          Confírmale a papá aquí
+        </a>
+        <a class="btn-whatsapp" href="https://wa.me/3021192566" target="_blank" rel="noopener noreferrer">
+          <img src="Imagenes/boton%20whatsapp.png" alt="WhatsApp">
+          Confírmale a mamá aquí
+        </a>
+      </div>
+
+      <!-- ============================================================
+           CÓDIGO DEL REGALO
+           giftCodes (más abajo, en el <script>) es un ejemplo: hay que
+           reemplazarlo con los códigos reales y el regalo que revela
+           cada uno.
+      ============================================================= -->
+      <p class="gift-code-text">
+        Cuando confirmes, te daremos un código para ver el regalo que puedes traer y así evitar que se repitan muchos regalos iguales o similares.
+      </p>
+      <div class="gift-code-box">
+        <input type="text" id="gift-code-input" class="gift-code-input" placeholder="Ingresa tu código">
+        <button type="button" id="gift-code-submit" class="btn-gift-code">Ver regalo</button>
+      </div>
+      <p id="gift-code-result" class="gift-code-result"></p>
     </div>
 
 
@@ -1018,6 +1112,32 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+  // ============================================================
+  // 0) CÓDIGO DEL REGALO
+  //    EJEMPLO: reemplazar por los códigos reales (en mayúsculas)
+  //    y el texto del regalo que cada uno debe revelar.
+  // ============================================================
+  var giftCodes = {
+    'EJEMPLO': 'Aquí va la descripción del regalo sugerido.'
+  };
+
+  document.getElementById('gift-code-submit').addEventListener('click', function () {
+    var input = document.getElementById('gift-code-input');
+    var result = document.getElementById('gift-code-result');
+    var code = input.value.trim().toUpperCase();
+    var gift = giftCodes[code];
+
+    if (gift) {
+      result.textContent = gift;
+      result.classList.add('success');
+      result.classList.remove('error');
+    } else {
+      result.textContent = 'Código no válido, revisa que esté bien escrito.';
+      result.classList.add('error');
+      result.classList.remove('success');
+    }
+  });
+
   // ============================================================
   // 1) ANIMACIÓN DEL SOBRE + AUTOPLAY DE AUDIO
   // ============================================================
