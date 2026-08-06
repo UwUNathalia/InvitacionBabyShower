@@ -416,6 +416,59 @@
     .central-illustration img{ animation: none; }
   }
 
+  /* Reproductor de la canción */
+  .song-section{
+    text-align: center;
+    margin: 0 auto 1.6rem;
+  }
+
+  .song-label{
+    font-size: 1rem;
+    color: var(--texto-cafe);
+    margin-bottom: 0.7rem;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-play{
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #fbc9ce, #f3a7b0);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .btn-play .icon-play{
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 16px solid #fff;
+    margin-left: 4px;
+  }
+
+  .btn-play .icon-pause{
+    display: none;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .btn-play .icon-pause span{
+    display: block;
+    width: 5px;
+    height: 20px;
+    background: #fff;
+    border-radius: 2px;
+  }
+
+  .btn-play.playing .icon-play{ display: none; }
+  .btn-play.playing .icon-pause{ display: flex; }
+
   .invite-text{
     text-align: center;
     font-size: 1.15rem;
@@ -440,10 +493,23 @@
 
   .date-time-box{
     text-align: center;
-    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .date-day{
+    display: block;
+    font-size: 1.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--texto-cafe);
+  }
+
+  .date-rest{
+    display: block;
+    font-size: 1.2rem;
     font-weight: 600;
     color: var(--texto-cafe);
-    margin-bottom: 1.5rem;
+    margin-top: 0.2rem;
   }
 
   /* Placeholder de foto (ecografía) */
@@ -480,6 +546,14 @@
     color: #cbb28f;
   }
 
+  .location-label{
+    text-align: center;
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.7rem;
+    color: var(--dorado);
+    margin: 0 0 0.5rem;
+  }
+
   /* Dirección */
   .address-block{
     text-align: center;
@@ -508,6 +582,27 @@
   .btn-location:hover{
     background: var(--durazno);
     color: var(--texto-cafe);
+  }
+
+  .countdown-title{
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .countdown-title .word-cuenta{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--texto-cafe);
+  }
+
+  .countdown-title .word-regresiva{
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.1rem;
+    color: var(--dorado);
+    margin-left: 0.5rem;
   }
 
   /* Countdown */
@@ -573,19 +668,34 @@
   }
 
   .circle-photo.large{
-    width: 80%;
-    max-width: 350px;
-    min-width: 270px;
+    width: 95%;
+    max-width: 420px;
+    min-width: 320px;
     position: relative;
     top: -2.6rem;
   }
 
   .circle-photo.small{
-    width: 70%;
-    max-width: 300px;
-    min-width: 250px;
+    width: 84%;
+    max-width: 370px;
+    min-width: 290px;
     position: relative;
     top: 3.5rem;
+    margin-left: -4rem;
+  }
+
+  .comfy-banner{
+    text-align: center;
+    background: linear-gradient(135deg, #fbc9ce, #f6b8c0);
+    color: var(--blanco-crema);
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+    padding: 0.7rem 1.4rem;
+    border-radius: 30px;
+    max-width: 300px;
+    margin: 0 auto 2rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   }
 
   .welcome-text-wrap{
@@ -612,9 +722,12 @@
     padding: 0 1.2rem;
   }
 
-  .rsvp-section p{
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
+  .rsvp-title{
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: var(--texto-cafe);
+    margin-bottom: 1.1rem;
   }
 
   .btn-whatsapp{
@@ -764,11 +877,12 @@
 
 <!-- ============================================================
      AUDIO DE FONDO
-     Reemplazar el src por el archivo real, ej: /assets/music.mp3
-     No hay botón visible de play/pause: inicia con el click del sobre.
+     Intenta iniciar sola al abrir el sobre; además hay un botón
+     de play/pause visible más abajo (sección "song-section") por
+     si el navegador bloquea el autoplay.
 ============================================================= -->
 <audio id="bg-music" loop preload="auto">
-  <source src="assets/music.mp3" type="audio/mpeg">
+  <source src="Imagenes/Zo%C3%A9%20-%20Andr%C3%B3meda.mp3" type="audio/mpeg">
 </audio>
 
 <!-- ============================================================
@@ -792,15 +906,24 @@
       </div>
     </div>
 
+    <!-- Reproductor de la canción -->
+    <div class="song-section">
+      <p class="song-label">Reproduce nuestra canción:</p>
+      <button type="button" class="btn-play" id="song-toggle" aria-label="Reproducir canción">
+        <span class="icon-play"></span>
+        <span class="icon-pause"><span></span><span></span></span>
+      </button>
+    </div>
 
     <!-- Texto invitación -->
     <p class="invite-text">mis papis</p>
-    <p class="invite-parents">Jeysson Obando y Alejandra Ruiz</p>
+    <p class="invite-parents">Jeysson y Alejandra</p>
     <p class="invite-cta">Te invitan a celebrar:</p>
 
     <!-- Fecha y hora -->
     <div class="date-time-box">
-      Domingo, 30 de Agosto | 1:00 PM
+      <span class="date-day">Domingo</span>
+      <span class="date-rest">30 de Agosto | 1:00 PM</span>
     </div>
 
     <!-- Espacio para foto 1 (ecografía) -->
@@ -811,6 +934,7 @@
       <small>(Ecografía y Padres)</small>
     </div>
 
+    <p class="location-label font-script">¿En dónde?</p>
 
     <!-- Dirección + botón ubicación -->
     <div class="address-block">
@@ -821,11 +945,14 @@
 
     <div class="text-center">
       <a class="btn-location" href="https://maps.app.goo.gl/wwiHrUmgQQbkBMy18" target="_blank" rel="noopener noreferrer">
-        Ver ubicación
+        Ver mapa
       </a>
     </div>
 
     <!-- Cuenta regresiva -->
+    <div class="countdown-title">
+      <span class="word-cuenta">Cuenta</span><span class="word-regresiva">Regresiva</span>
+    </div>
     <div class="countdown-wrap" id="countdown">
       <div class="countdown-item">
         <div class="countdown-number" id="cd-days">00</div>
@@ -856,6 +983,7 @@
       </div>
     </div>
 
+    <div class="comfy-banner">Recuerda ir cómodo para las actividades</div>
 
     <!-- Texto de bienvenida -->
     <div class="welcome-text-wrap">
@@ -869,10 +997,10 @@
          CONFIRMAR ASISTENCIA (WhatsApp)
     ============================================================= -->
     <div class="rsvp-section">
-      <p>¡Confírmanos que nos acompañarás!</p>
+      <p class="rsvp-title">¡Confírmanos que nos acompañarás!</p>
       <a class="btn-whatsapp" href="https://wa.me/3125840081" target="_blank" rel="noopener noreferrer">
         <img src="Imagenes/boton%20whatsapp.png" alt="WhatsApp">
-        Confirma aquí
+        Confírmale a papá aquí
       </a>
     </div>
 
@@ -914,6 +1042,32 @@
       invitation.classList.add('show');
     }, 700);
   });
+
+  // ============================================================
+  // 1b) BOTÓN DE PLAY/PAUSE DE LA CANCIÓN
+  // ============================================================
+  (function () {
+    var audio = document.getElementById('bg-music');
+    var songBtn = document.getElementById('song-toggle');
+
+    songBtn.addEventListener('click', function () {
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    });
+
+    audio.addEventListener('play', function () {
+      songBtn.classList.add('playing');
+      songBtn.setAttribute('aria-label', 'Pausar canción');
+    });
+
+    audio.addEventListener('pause', function () {
+      songBtn.classList.remove('playing');
+      songBtn.setAttribute('aria-label', 'Reproducir canción');
+    });
+  })();
 
   // ============================================================
   // 2) CUENTA REGRESIVA EN TIEMPO REAL
