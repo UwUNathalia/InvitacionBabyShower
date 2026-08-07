@@ -779,12 +779,66 @@
     min-height: 1.4em;
   }
 
-  .gift-code-result.success{
-    color: var(--verde-oscuro);
-  }
-
   .gift-code-result.error{
     color: #b5605a;
+  }
+
+  /* Revelación del regalo: imagen + confeti + nota de referencia */
+  .gift-code-reveal{
+    position: relative;
+    max-width: 320px;
+    margin: 0 auto 1.5rem;
+    text-align: center;
+  }
+
+  .gift-code-image{
+    width: 100%;
+    display: block;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+    animation: gift-pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  @keyframes gift-pop-in{
+    0%   { opacity: 0; transform: scale(0.7); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  .gift-code-note{
+    margin-top: 0.7rem;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: #a98a6f;
+  }
+
+  .confetti-burst{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .confetti-piece{
+    position: absolute;
+    top: -12px;
+    width: 8px;
+    height: 14px;
+    opacity: 0.95;
+    animation: confetti-fall 1.5s ease-in forwards;
+  }
+
+  @keyframes confetti-fall{
+    0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(260px) rotate(560deg); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .gift-code-image{ animation: none; }
+    .confetti-piece{ display: none; }
   }
 
   .btn-whatsapp{
@@ -1065,18 +1119,22 @@
 
       <!-- ============================================================
            CÓDIGO DEL REGALO
-           giftCodes (más abajo, en el <script>) es un ejemplo: hay que
-           reemplazarlo con los códigos reales y el regalo que revela
-           cada uno.
+           giftCodes (más abajo, en el <script>) mapea cada código al
+           nombre de su imagen en Imagenes/Regalos/.
       ============================================================= -->
       <p class="gift-code-text">
         Cuando confirmes, te daremos un código para ver el regalo que puedes traer y así evitar que se repitan muchos regalos iguales o similares.
       </p>
       <div class="gift-code-box">
-        <input type="text" id="gift-code-input" class="gift-code-input" placeholder="Ingresa tu código">
+        <input type="text" inputmode="numeric" id="gift-code-input" class="gift-code-input" placeholder="Ingresa tu código">
         <button type="button" id="gift-code-submit" class="btn-gift-code">Ver regalo</button>
       </div>
-      <p id="gift-code-result" class="gift-code-result"></p>
+      <p id="gift-code-result" class="gift-code-result error" style="display:none;"></p>
+      <div id="gift-code-reveal" class="gift-code-reveal" style="display:none;">
+        <div class="confetti-burst" id="confetti-burst"></div>
+        <img id="gift-code-image" class="gift-code-image" src="" alt="Regalo sugerido">
+        <p class="gift-code-note">Recuerda que es solo de referencia</p>
+      </div>
     </div>
 
 
@@ -1095,27 +1153,55 @@
 <script>
   // ============================================================
   // 0) CÓDIGO DEL REGALO
-  //    EJEMPLO: reemplazar por los códigos reales (en mayúsculas)
-  //    y el texto del regalo que cada uno debe revelar.
+  //    Cada código apunta a su imagen en Imagenes/Regalos/.
   // ============================================================
   var giftCodes = {
-    'EJEMPLO': 'Aquí va la descripción del regalo sugerido.'
+    '104472': 'Imagenes/Regalos/104472.png',
+    '299800': 'Imagenes/Regalos/299800.png',
+    '440059': 'Imagenes/Regalos/440059.png',
+    '552686': 'Imagenes/Regalos/552686.png',
+    '824813': 'Imagenes/Regalos/824813.png',
+    '833217': 'Imagenes/Regalos/833217.png',
+    '948130': 'Imagenes/Regalos/948130.png'
   };
+
+  function launchConfetti(container) {
+    var colors = ['#f3a7b0', '#fbc9ce', '#c79a5f', '#e6c99a', '#d8ecf3', '#9ec9a3'];
+    container.innerHTML = '';
+    for (var i = 0; i < 26; i++) {
+      var piece = document.createElement('span');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.floor(Math.random() * 100) + '%';
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.animationDelay = (Math.random() * 0.3).toFixed(2) + 's';
+      piece.style.animationDuration = (1.1 + Math.random() * 0.6).toFixed(2) + 's';
+      container.appendChild(piece);
+    }
+  }
 
   document.getElementById('gift-code-submit').addEventListener('click', function () {
     var input = document.getElementById('gift-code-input');
-    var result = document.getElementById('gift-code-result');
-    var code = input.value.trim().toUpperCase();
-    var gift = giftCodes[code];
+    var errorMsg = document.getElementById('gift-code-result');
+    var reveal = document.getElementById('gift-code-reveal');
+    var image = document.getElementById('gift-code-image');
+    var code = input.value.trim();
+    var imgPath = giftCodes[code];
 
-    if (gift) {
-      result.textContent = gift;
-      result.classList.add('success');
-      result.classList.remove('error');
+    if (imgPath) {
+      errorMsg.style.display = 'none';
+      image.src = imgPath;
+      reveal.style.display = 'block';
+
+      // Reinicia la animación de aparición por si ya se había mostrado antes
+      image.style.animation = 'none';
+      void image.offsetWidth;
+      image.style.animation = '';
+
+      launchConfetti(document.getElementById('confetti-burst'));
     } else {
-      result.textContent = 'Código no válido, revisa que esté bien escrito.';
-      result.classList.add('error');
-      result.classList.remove('success');
+      reveal.style.display = 'none';
+      errorMsg.textContent = 'Código no válido, revisa que esté bien escrito.';
+      errorMsg.style.display = 'block';
     }
   });
 
