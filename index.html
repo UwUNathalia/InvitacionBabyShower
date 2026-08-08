@@ -110,7 +110,6 @@
     </div>
 
     <div class="song-section">
-      <p class="song-label">Reproduce nuestra canción:</p>
       <button type="button" class="btn-play" id="song-toggle" aria-label="Reproducir canción">
         <span class="icon-play"></span>
         <span class="icon-pause"><span></span><span></span></span>
@@ -296,6 +295,9 @@
   document.getElementById('envelope-trigger').addEventListener('click', function () {
     var envelopeScreen = document.getElementById('envelope-screen');
     var invitation = document.getElementById('invitation');
+    var audio = document.getElementById('bg-music');
+
+    audio.play().catch(function () {});
 
     envelopeScreen.classList.add('opening');
 
