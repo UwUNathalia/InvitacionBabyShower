@@ -6,12 +6,6 @@
 <title>Baby Shower | Julieta Zoé</title>
 <meta name="description" content="Jeysson Obando y Alejandra Ruiz te invitan a celebrar juntos la llegada de su bebé. Domingo 30 de agosto, 1:00 PM.">
 
-<!-- ============================================================
-     VISTA PREVIA AL COMPARTIR EL LINK (Open Graph / Twitter Card)
-     Así se ve la tarjeta con imagen al pegar el link en WhatsApp,
-     Facebook, etc. og:image y og:url deben ser URLs absolutas de
-     la página ya publicada (GitHub Pages).
-============================================================= -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://uwunathalia.github.io/InvitacionBabyShower/">
 <meta property="og:title" content="¡Baby Shower!">
@@ -24,925 +18,31 @@
 <meta name="twitter:description" content="Jeysson Obando y Alejandra Ruiz te invitan a celebrar juntos la llegada de su bebé. Domingo 30 de agosto, 1:00 PM.">
 <meta name="twitter:image" content="https://uwunathalia.github.io/InvitacionBabyShower/Imagenes/pollito-recortado.png">
 
-<!-- Bootstrap 5 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Google Fonts: script elegante + serif suave -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 
-<style>
-  :root{
-    --rosa-palo: #f3d9d9;
-    --rosa-suave: #f7e6e0;
-    --durazno: #fce3d0;
-    --azul-cielo: #d8ecf3;
-    --dorado: #c79a5f;
-    --dorado-suave: #e6c99a;
-    --texto-cafe: #6b4a3e;
-    --blanco-crema: #fffaf5;
-    /* Fondo base: rosado casi blanco (a la espera de las manchitas
-       con transparencia que se colocarán encima como imágenes) */
-    --fondo-base: #fdf5f4;
-    --verde-oscuro: #4f6b4a;
-  }
-
-  * { box-sizing: border-box; }
-
-  html, body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-  }
-
-  body{
-    font-family: 'Cormorant Garamond', serif;
-    color: var(--texto-cafe);
-    background: var(--fondo-base);
-    min-height: 100vh;
-    position: relative;
-  }
-
-  .font-script{
-    font-family: 'Great Vibes', cursive;
-  }
-
-  /* ================= SOBRE / ENVELOPE ================= */
-  #envelope-screen{
-    position: fixed;
-    inset: 0;
-    z-index: 999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    background-color: #eef6ea;
-    background-image: url('Imagenes/fondo.png');
-    /* La pantalla del sobre siempre mide exactamente 100vh (nunca hace
-       scroll), así que la imagen se estira para llenar ese alto en un
-       solo tile: no vuelve a repetirse, no se ve la costura. */
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position: top center;
-    transition: opacity 0.9s ease, visibility 0.9s ease;
-  }
-
-  /* En pantallas más anchas que una tarjeta de invitación, el borde de
-     hojas deja de estirarse a todo el ancho (se veía separado del
-     sobre) y se limita a una columna centrada de 480px; el resto del
-     ancho queda en el verde sólido. En celular sigue ocupando todo. */
-  @media (min-width: 481px){
-    #envelope-screen{
-      background-size: 480px 100%;
-    }
-  }
-
-  #envelope-screen.hide{
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  .envelope-title-1{
-    font-family: 'Great Vibes', cursive;
-    font-size: 2.4rem;
-    color: #b8863f;
-    text-shadow: 0 1px 3px rgba(255,255,255,0.6);
-    margin-bottom: -0.3rem;
-  }
-
-  .envelope-title-2{
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: 6px;
-    text-transform: uppercase;
-    color: var(--verde-oscuro);
-    text-shadow: 0 1px 3px rgba(255,255,255,0.5);
-    margin-bottom: 1.4rem;
-  }
-
-  /* Animalitos que "aparecen de la nada" al cargar la pantalla del sobre */
-  .envelope-animal{
-    position: absolute;
-    z-index: 1;
-    pointer-events: none;
-    animation: pop-in-animal 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-  }
-
-  .envelope-animal img{
-    width: 100%;
-    height: auto;
-    display: block;
-    filter: drop-shadow(0 6px 10px rgba(90,70,40,0.18));
-  }
-
-  /* Animales que además se mecen suavemente de un lado a otro tras
-     aparecer. Cada instancia usa su propia duración/retraso (ver HTML)
-     para que no se muevan al mismo tiempo y se vea natural. */
-  .envelope-animal.sway{
-    animation-name: pop-in-animal, sway-animal;
-    animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1), ease-in-out;
-    animation-fill-mode: both, none;
-    animation-iteration-count: 1, infinite;
-  }
-
-  @keyframes sway-animal{
-    0%, 100% { rotate: -4deg; }
-    50%      { rotate: 4deg; }
-  }
-
-  @keyframes pop-in-animal{
-    0%   { opacity: 0; transform: scale(0.25) rotate(-10deg); }
-    65%  { opacity: 1; transform: scale(1.12) rotate(4deg); }
-    100% { opacity: 1; transform: scale(1) rotate(0deg); }
-  }
-
-  /* Estrellitas doradas girando */
-  .envelope-star{
-    position: absolute;
-    z-index: 1;
-    pointer-events: none;
-    opacity: 0;
-    animation: fade-in-star 0.6s ease forwards, spin-star 7s linear infinite;
-  }
-
-  .envelope-star img{
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  @keyframes fade-in-star{
-    to{ opacity: 1; }
-  }
-
-  @keyframes spin-star{
-    from{ transform: rotate(0deg); }
-    to{ transform: rotate(360deg); }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .envelope-animal, .envelope-star{ animation: none; opacity: 1; }
-  }
-
-  .envelope-wrap{
-    text-align: center;
-    cursor: pointer;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .envelope{
-    position: relative;
-    width: 280px;
-    height: 190px;
-    border-radius: 10px;
-    box-shadow: 0 15px 35px rgba(90, 55, 20, 0.35);
-    margin: 0 auto;
-    transition: transform 0.5s ease;
-  }
-
-  .envelope-wrap:hover .envelope{
-    transform: translateY(-4px);
-  }
-
-  /* Cara trasera del sobre: rectángulo kraft + líneas de pliegue
-     (izquierda, derecha, inferior) formando el patrón de rombo clásico */
-  .envelope-back{
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-
-  .envelope-back svg{
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
-
-  /* Solapa superior: se "abre" rotando hacia atrás */
-  .envelope-flap{
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: 2;
-    transform-origin: top center;
-    transition: transform 0.8s ease;
-  }
-
-  .envelope-flap svg{
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
-
-  #envelope-screen.opening .envelope-flap{
-    transform: rotateX(180deg);
-  }
-
-  /* Sello de cera real (imagen), centrado en el punto donde
-     confluyen los pliegues del sobre */
-  .wax-seal{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100px;
-    height: 100px;
-    z-index: 3;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-
-  .wax-seal img{
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: contain;
-    filter: drop-shadow(0 3px 6px rgba(90, 55, 20, 0.45));
-  }
-
-  #envelope-screen.opening .wax-seal{
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.5);
-  }
-
-  .envelope-tap-hint{
-    margin-top: 22px;
-    color: var(--texto-cafe);
-    font-family: 'Great Vibes', cursive;
-    font-size: 1.8rem;
-    letter-spacing: 1px;
-    text-shadow: 0 1px 2px rgba(255,255,255,0.6);
-    animation: pulse-hint 1.8s infinite ease-in-out;
-  }
-
-  @keyframes pulse-hint{
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
-  }
-
-  /* ================= INVITACIÓN ================= */
-  #invitation{
-    opacity: 0;
-    transform: scale(0.92);
-    transition: opacity 1s ease 0.3s, transform 1s ease 0.3s;
-  }
-
-  #invitation.show{
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .phone-frame{
-    max-width: 480px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 0;
-    padding-bottom: 2rem;
-    background-color: var(--fondo-base);
-  }
-
-  /* ================= MANCHITAS DE FONDO (pendiente) =================
-     Cuando subas las imágenes de manchitas (PNG con fondo transparente)
-     a /Imagenes/, dime los nombres de archivo y las coloco aquí como
-     capas <img class="manchita"> detrás del contenido (z-index:-1),
-     repartidas a lo largo de toda la invitación. */
-  .manchita{
-    position: absolute;
-    z-index: -1;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  /* Banner Baby Shower: forma de cinta con puntas dobladas */
-  .ribbon-banner-wrap{
-    display: flex;
-    justify-content: center;
-    padding-top: 1.6rem;
-    margin-bottom: 0.4rem;
-  }
-
-  .ribbon-banner{
-    position: relative;
-    display: inline-block;
-    background: linear-gradient(135deg, #f0b8bd, #dc949e);
-    color: var(--blanco-crema);
-    text-align: center;
-    padding: 0.75rem 2.4rem;
-    font-size: 1.35rem;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    font-weight: 600;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.14);
-  }
-
-  .ribbon-banner::before,
-  .ribbon-banner::after{
-    content: "";
-    position: absolute;
-    top: 0;
-    width: 0;
-    height: 0;
-    border-top: 1.55rem solid transparent;
-    border-bottom: 1.55rem solid transparent;
-  }
-
-  .ribbon-banner::before{
-    left: -18px;
-    border-right: 18px solid #c9818a;
-  }
-
-  .ribbon-banner::after{
-    right: -18px;
-    border-left: 18px solid #c9818a;
-  }
-
-  @media (min-width: 576px){
-    .ribbon-banner{ font-size: 1.55rem; padding: 0.85rem 2.8rem; }
-  }
-
-  .baby-name{
-    text-align: center;
-    font-size: 3.2rem;
-    line-height: 1;
-    margin-top: 1.2rem;
-    color: var(--texto-cafe);
-  }
-
-  .baby-lastname{
-    text-align: center;
-    font-size: 1.1rem;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--texto-cafe);
-    margin-bottom: 1.2rem;
-  }
-
-  /* Ilustración central */
-  .central-illustration-wrap{
-    display: flex;
-    justify-content: center;
-    margin: 1rem auto 1.5rem;
-  }
-
-  .central-illustration{
-    width: 240px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* La ilustración (pollito + corona de flores) ya trae su propio
-     marco circular ilustrado, así que no se fuerza a un círculo
-     recortado: solo se centra y se le da una sombra suave. */
-  .central-illustration img{
-    width: 100%;
-    height: auto;
-    display: block;
-    filter: drop-shadow(0 10px 18px rgba(107,74,62,0.18));
-    animation: float-chick 4s ease-in-out infinite;
-  }
-
-  @keyframes float-chick{
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50%      { transform: translateY(-8px) rotate(-1.2deg); }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .central-illustration img{ animation: none; }
-  }
-
-  /* Reproductor de la canción */
-  .song-section{
-    text-align: center;
-    margin: 0 auto 1.6rem;
-  }
-
-  .song-label{
-    font-size: 1rem;
-    color: var(--texto-cafe);
-    margin-bottom: 0.7rem;
-    letter-spacing: 0.5px;
-  }
-
-  .btn-play{
-    width: 54px;
-    height: 54px;
-    border-radius: 50%;
-    border: none;
-    background: linear-gradient(135deg, #fbc9ce, #f3a7b0);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    padding: 0;
-  }
-
-  .btn-play .icon-play{
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 16px solid #fff;
-    margin-left: 4px;
-  }
-
-  .btn-play .icon-pause{
-    display: none;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .btn-play .icon-pause span{
-    display: block;
-    width: 5px;
-    height: 20px;
-    background: #fff;
-    border-radius: 2px;
-  }
-
-  .btn-play.playing .icon-play{ display: none; }
-  .btn-play.playing .icon-pause{ display: flex; }
-
-  .invite-text{
-    text-align: center;
-    font-size: 1.15rem;
-    margin-bottom: 0.3rem;
-  }
-
-  .invite-parents{
-    text-align: center;
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 0.3rem;
-  }
-
-  .invite-cta{
-    text-align: center;
-    letter-spacing: 2px;
-    font-size: 1rem;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-    color: var(--dorado);
-  }
-
-  .date-time-box{
-    text-align: center;
-    margin-bottom: 1.5rem;
-  }
-
-  .date-day{
-    display: block;
-    font-size: 1.7rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: var(--texto-cafe);
-  }
-
-  .date-rest{
-    display: block;
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--texto-cafe);
-    margin-top: 0.2rem;
-  }
-
-  /* Foto principal (ecografía), ya viene con su propio marco tipo
-     polaroid ilustrado, así que solo se centra y se le da sombra. */
-  .photo-frame{
-    width: 100%;
-    max-width: 380px;
-    margin: 0 auto 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .photo-frame img{
-    width: 100%;
-    height: auto;
-    display: block;
-    filter: drop-shadow(0 10px 18px rgba(107,74,62,0.18));
-  }
-
-  .location-label{
-    text-align: center;
-    font-family: 'Great Vibes', cursive;
-    font-size: 1.7rem;
-    color: var(--dorado);
-    margin: 0 0 0.5rem;
-  }
-
-  /* Dirección */
-  .address-block{
-    text-align: center;
-    margin-bottom: 1rem;
-    font-size: 1.05rem;
-    line-height: 1.5;
-  }
-
-  .btn-location{
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--rosa-palo);
-    color: var(--texto-cafe);
-    border: none;
-    padding: 0.55rem 1.4rem;
-    border-radius: 30px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-decoration: none;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-    transition: transform 0.2s ease, background 0.2s ease;
-    margin-bottom: 1.8rem;
-  }
-
-  .btn-location:hover{
-    background: var(--durazno);
-    color: var(--texto-cafe);
-  }
-
-  .countdown-title{
-    text-align: center;
-    margin-bottom: 1rem;
-  }
-
-  .countdown-title .word-cuenta{
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 700;
-    font-size: 1.5rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--texto-cafe);
-  }
-
-  .countdown-title .word-regresiva{
-    font-family: 'Great Vibes', cursive;
-    font-size: 2.1rem;
-    color: var(--dorado);
-    margin-left: 0.5rem;
-  }
-
-  /* Countdown */
-  .countdown-wrap{
-    display: flex;
-    justify-content: center;
-    gap: 0.6rem;
-    margin-bottom: 1.8rem;
-    flex-wrap: nowrap;
-  }
-
-  .countdown-item{
-    background: var(--blanco-crema);
-    border-radius: 12px;
-    padding: 0.6rem 0.4rem;
-    min-width: 62px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  }
-
-  .countdown-number{
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--dorado);
-    line-height: 1;
-  }
-
-  .countdown-label{
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--texto-cafe);
-    margin-top: 0.2rem;
-  }
-
-  /* Dos fotos de los papás */
-  .dual-photo-wrap{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.3rem;
-    /* La foto derecha se desplaza con position:relative (no afecta el
-       alto del contenedor), así que se suma ese desplazamiento aquí
-       para que no se monte sobre el texto de abajo */
-    margin-bottom: 5.5rem;
-    flex-wrap: nowrap;
-  }
-
-  /* Las fotos ya vienen recortadas en forma de "blob" orgánico
-     (PNG con transparencia), así que no se fuerza ningún marco
-     circular: solo se centran y se les da una sombra suave. */
-  .circle-photo{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .circle-photo img{
-    width: 100%;
-    height: auto;
-    display: block;
-    filter: drop-shadow(0 10px 16px rgba(90,70,40,0.22));
-  }
-
-  .circle-photo.large{
-    width: 95%;
-    max-width: 420px;
-    min-width: 320px;
-    position: relative;
-    top: -2.6rem;
-  }
-
-  .circle-photo.small{
-    width: 84%;
-    max-width: 370px;
-    min-width: 290px;
-    position: relative;
-    top: 3.5rem;
-    margin-left: -4rem;
-  }
-
-  .comfy-banner{
-    text-align: center;
-    background: linear-gradient(135deg, #fbc9ce, #f6b8c0);
-    color: var(--blanco-crema);
-    font-weight: 600;
-    font-size: 0.95rem;
-    letter-spacing: 0.3px;
-    padding: 0.7rem 1.4rem;
-    border-radius: 30px;
-    max-width: 300px;
-    margin: 0 auto 2rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  }
-
-  .welcome-text-wrap{
-    margin-bottom: 2rem;
-  }
-
-  /* Caja de texto (como una tarjetita) */
-  .welcome-text{
-    text-align: center;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    max-width: 300px;
-    margin: 0 auto;
-    padding: 1.4rem 1.3rem;
-    background: rgba(255, 250, 245, 0.88);
-    border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(107, 74, 62, 0.12);
-  }
-
-  /* Confirmar asistencia (WhatsApp) */
-  .rsvp-section{
-    text-align: center;
-    margin-bottom: 2rem;
-    padding: 0 1.2rem;
-  }
-
-  .rsvp-title{
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.55rem;
-    font-weight: 700;
-    color: var(--texto-cafe);
-    margin-bottom: 1.1rem;
-  }
-
-  .rsvp-buttons{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.8rem;
-    margin-bottom: 1.8rem;
-  }
-
-  /* Código del regalo */
-  .gift-code-text{
-    font-size: 0.95rem;
-    line-height: 1.5;
-    max-width: 340px;
-    margin: 0 auto 1rem;
-    color: var(--texto-cafe);
-  }
-
-  .gift-code-box{
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    margin-bottom: 0.8rem;
-  }
-
-  .gift-code-input{
-    border: 2px solid var(--rosa-palo);
-    border-radius: 30px;
-    padding: 0.55rem 1.2rem;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    color: var(--texto-cafe);
-    background: var(--blanco-crema);
-    text-align: center;
-    width: 180px;
-    max-width: 60%;
-  }
-
-  .gift-code-input:focus{
-    outline: none;
-    border-color: var(--dorado-suave);
-  }
-
-  .btn-gift-code{
-    border: none;
-    border-radius: 30px;
-    padding: 0.55rem 1.4rem;
-    background: var(--rosa-palo);
-    color: var(--texto-cafe);
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    transition: background 0.2s ease;
-  }
-
-  .btn-gift-code:hover{
-    background: var(--durazno);
-  }
-
-  .gift-code-result{
-    font-size: 0.95rem;
-    font-weight: 600;
-    min-height: 1.4em;
-  }
-
-  .gift-code-result.error{
-    color: #b5605a;
-  }
-
-  /* Revelación del regalo: imagen + confeti + nota de referencia */
-  .gift-code-reveal{
-    position: relative;
-    max-width: 320px;
-    margin: 0 auto 1.5rem;
-    text-align: center;
-  }
-
-  .gift-code-image{
-    width: 100%;
-    display: block;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
-    animation: gift-pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-  }
-
-  @keyframes gift-pop-in{
-    0%   { opacity: 0; transform: scale(0.7); }
-    100% { opacity: 1; transform: scale(1); }
-  }
-
-  .gift-code-note{
-    text-align: center;
-    background: linear-gradient(135deg, #fbc9ce, #f6b8c0);
-    color: var(--blanco-crema);
-    font-weight: 600;
-    font-size: 0.9rem;
-    letter-spacing: 0.3px;
-    padding: 0.7rem 1.2rem;
-    border-radius: 30px;
-    max-width: 300px;
-    margin: 0.8rem auto 0;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  }
-
-  .confetti-burst{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-    pointer-events: none;
-    z-index: 2;
-  }
-
-  .confetti-piece{
-    position: absolute;
-    top: -12px;
-    width: 8px;
-    height: 14px;
-    opacity: 0.95;
-    animation: confetti-fall 1.5s ease-in forwards;
-  }
-
-  @keyframes confetti-fall{
-    0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(260px) rotate(560deg); opacity: 0; }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .gift-code-image{ animation: none; }
-    .confetti-piece{ display: none; }
-  }
-
-  .btn-whatsapp{
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    background: linear-gradient(135deg, #fbc9ce, #f3a7b0);
-    color: var(--blanco-crema);
-    border: none;
-    padding: 0.7rem 1.8rem;
-    border-radius: 30px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    text-decoration: none;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  }
-
-  .btn-whatsapp img{
-    width: 26px;
-    height: 26px;
-    display: block;
-  }
-
-  /* Animación de pulso: crece un poco y vuelve a su tamaño, en bucle */
-  .btn-location,
-  .btn-whatsapp{
-    animation: pulse-btn 2.2s ease-in-out infinite;
-  }
-
-  .btn-location:hover,
-  .btn-whatsapp:hover{
-    animation-play-state: paused;
-  }
-
-  @keyframes pulse-btn{
-    0%, 100% { transform: scale(1); }
-    50%      { transform: scale(1.07); }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .btn-location,
-    .btn-whatsapp{ animation: none; }
-  }
-
-  /* Footer */
-  .invite-footer{
-    text-align: center;
-    font-family: 'Great Vibes', cursive;
-    font-size: 1.6rem;
-    color: var(--dorado);
-    padding-bottom: 1.5rem;
-  }
-
-  /* Decoraciones flotantes (placeholders) */
-  .deco{
-    position: absolute;
-    opacity: 0.85;
-    pointer-events: none;
-    z-index: 0;
-    max-width: 90px;
-  }
-
-  .section-relative{
-    position: relative;
-  }
-
-  @media (min-width: 576px){
-    .baby-name{ font-size: 3.8rem; }
-    .central-illustration{ width: 280px; }
-  }
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<!-- ============================================================
-     PANTALLA DE SOBRE (envelope) - se cierra al hacer click
-============================================================= -->
 <div id="envelope-screen">
 
-  <!-- Animalitos que aparecen "de la nada" al cargar la pantalla,
-       cada uno con su propio retraso para que aparezcan en cadena -->
-  <div class="envelope-animal" style="top:8%; left:4%; width:100px; animation-delay:0.1s;">
+  <div class="envelope-animal" style="top:1%; left:3%; width:64px; animation-delay:0.1s;">
     <img src="Imagenes/conejo.png" alt="Conejito">
   </div>
-  <div class="envelope-animal" style="top:6%; right:5%; width:108px; animation-delay:0.35s;">
+  <div class="envelope-animal" style="top:1%; right:4%; width:68px; animation-delay:0.35s;">
     <img src="Imagenes/buo.png" alt="Búho">
   </div>
-  <div class="envelope-animal sway" style="bottom:2%; left:3%; width:122px; animation-delay:0.6s, 1.4s; animation-duration:0.9s, 3.6s;">
+  <div class="envelope-animal sway" style="top:42%; left:1%; width:122px; animation-delay:0.6s, 1.4s; animation-duration:0.9s, 3.6s;">
     <img src="Imagenes/elefante.png" alt="Elefante con globos">
   </div>
-  <div class="envelope-animal sway" style="bottom:2%; right:4%; width:114px; animation-delay:0.85s, 1.9s; animation-duration:0.9s, 4.3s;">
+  <div class="envelope-animal sway" style="top:45%; right:2%; width:114px; animation-delay:0.85s, 1.9s; animation-duration:0.9s, 4.3s;">
     <img src="Imagenes/zorro.png" alt="Zorrito">
   </div>
 
-  <!-- Estrellas doradas girando, en varios tamaños -->
   <div class="envelope-star" style="top:3%; left:22%; width:20px; animation-delay:0.1s, 0s; animation-duration:0.6s, 6s;"><img src="Imagenes/star.png" alt=""></div>
   <div class="envelope-star" style="top:14%; left:34%; width:36px; animation-delay:0.2s, 0s; animation-duration:0.6s, 9s;"><img src="Imagenes/star.png" alt=""></div>
   <div class="envelope-star" style="top:4%; right:26%; width:26px; animation-delay:0.3s, 0s; animation-duration:0.6s, 7s;"><img src="Imagenes/star.png" alt=""></div>
@@ -957,11 +57,10 @@
   <div class="envelope-star" style="bottom:14%; right:32%; width:26px; animation-delay:1.2s, 0s; animation-duration:0.6s, 10.5s;"><img src="Imagenes/star.png" alt=""></div>
 
   <div class="envelope-wrap" id="envelope-trigger">
-    <div class="envelope-title-1 font-script">Invitación Digital</div>
+    <div class="envelope-title-1 font-script">Ha llegado el momento de celebrar en familia</div>
     <div class="envelope-title-2">Baby Shower</div>
     <div class="envelope">
 
-      <!-- Cara trasera: rectángulo kraft + pliegues laterales e inferior -->
       <div class="envelope-back">
         <svg viewBox="0 0 280 190" preserveAspectRatio="none">
           <rect x="0" y="0" width="280" height="190" rx="10" fill="#d9a876"></rect>
@@ -971,7 +70,6 @@
         </svg>
       </div>
 
-      <!-- Solapa superior (se abre al hacer click) -->
       <div class="envelope-flap">
         <svg viewBox="0 0 280 190" preserveAspectRatio="none">
           <defs>
@@ -984,7 +82,6 @@
         </svg>
       </div>
 
-      <!-- Sello de cera real (botón para abrir) -->
       <div class="wax-seal">
         <img src="Imagenes/cello%20de%20la%20carta.png" alt="Sello Obando Ruiz">
       </div>
@@ -993,38 +90,25 @@
   </div>
 </div>
 
-<!-- ============================================================
-     AUDIO DE FONDO
-     Intenta iniciar sola al abrir el sobre; además hay un botón
-     de play/pause visible más abajo (sección "song-section") por
-     si el navegador bloquea el autoplay.
-============================================================= -->
 <audio id="bg-music" loop preload="auto">
   <source src="Imagenes/Zo%C3%A9%20-%20Andr%C3%B3meda.mp3" type="audio/mpeg">
 </audio>
 
-<!-- ============================================================
-     INVITACIÓN PRINCIPAL
-============================================================= -->
 <div id="invitation" class="section-relative">
   <div class="phone-frame">
-    <!-- Header: cintillo Baby Shower -->
     <div class="ribbon-banner-wrap">
       <div class="ribbon-banner">Baby Shower</div>
     </div>
 
-    <!-- Nombre de la bebé -->
     <h1 class="baby-name font-script">Julieta Zoé</h1>
     <div class="baby-lastname">Obando Ruiz</div>
 
-    <!-- Ilustración central -->
     <div class="central-illustration-wrap">
       <div class="central-illustration">
         <img src="Imagenes/pollito-recortado.png" alt="Pollito con corona de flores">
       </div>
     </div>
 
-    <!-- Reproductor de la canción -->
     <div class="song-section">
       <p class="song-label">Reproduce nuestra canción:</p>
       <button type="button" class="btn-play" id="song-toggle" aria-label="Reproducir canción">
@@ -1033,25 +117,21 @@
       </button>
     </div>
 
-    <!-- Texto invitación -->
     <p class="invite-text">mis papis</p>
     <p class="invite-parents">Jeysson y Alejandra</p>
     <p class="invite-cta">Te invitan a celebrar:</p>
 
-    <!-- Fecha y hora -->
     <div class="date-time-box">
       <span class="date-day">Domingo</span>
       <span class="date-rest">30 de Agosto | 1:00 PM</span>
     </div>
 
-    <!-- Foto principal (ecografía) -->
     <div class="photo-frame">
       <img src="Imagenes/bebe_foto_pricipal.png" alt="Ecografía de Julieta Zoé">
     </div>
 
     <p class="location-label font-script">¿En dónde?</p>
 
-    <!-- Dirección + botón ubicación -->
     <div class="address-block">
       Conjunto Residencial Puerto Madero,<br>
       Ciudad Salitre<br>
@@ -1064,7 +144,6 @@
       </a>
     </div>
 
-    <!-- Cuenta regresiva -->
     <div class="countdown-title">
       <span class="word-cuenta">Cuenta</span><span class="word-regresiva">Regresiva</span>
     </div>
@@ -1087,8 +166,6 @@
       </div>
     </div>
 
-
-    <!-- Dos fotos de los papás -->
     <div class="dual-photo-wrap">
       <div class="circle-photo large">
         <img src="Imagenes/papis2-recortado.png" alt="Jeysson y Alejandra esperando a Julieta Zoé">
@@ -1100,17 +177,12 @@
 
     <div class="comfy-banner">Recuerda ir cómodo para las actividades</div>
 
-    <!-- Texto de bienvenida -->
     <div class="welcome-text-wrap">
       <p class="welcome-text">
         ¡Tu presencia hará este día aún más especial! Esperamos compartir la alegría de la llegada de Julieta Zoé con todos ustedes.
       </p>
     </div>
 
-
-    <!-- ============================================================
-         CONFIRMAR ASISTENCIA (WhatsApp)
-    ============================================================= -->
     <div class="rsvp-section">
       <p class="rsvp-title">¡Confírmanos que nos acompañarás!</p>
       <div class="rsvp-buttons">
@@ -1124,11 +196,6 @@
         </a>
       </div>
 
-      <!-- ============================================================
-           CÓDIGO DEL REGALO
-           giftCodes (más abajo, en el <script>) mapea cada código al
-           nombre de su imagen en Imagenes/Regalos/.
-      ============================================================= -->
       <p class="gift-code-text">
         Cuando confirmes, te daremos un código para ver el regalo que puedes traer y así evitar que se repitan muchos regalos iguales o similares.
       </p>
@@ -1144,24 +211,16 @@
       </div>
     </div>
 
-
-    <!-- Footer -->
     <div class="invite-footer">
       Con amor, Jeysson &amp; Alejandra
     </div>
 
-
   </div>
 </div>
 
-<!-- Bootstrap 5 JS (opcional, no imprescindible para esta página pero incluido por si se agregan componentes) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-  // ============================================================
-  // 0) CÓDIGO DEL REGALO
-  //    Cada código apunta a su imagen en Imagenes/Regalos/.
-  // ============================================================
   var giftCodes = {
     '104472': 'Imagenes/Regalos/104472.png',
     '109746': 'Imagenes/Regalos/109746.png',
@@ -1222,7 +281,6 @@
       image.src = imgPath;
       reveal.style.display = 'block';
 
-      // Reinicia la animación de aparición por si ya se había mostrado antes
       image.style.animation = 'none';
       void image.offsetWidth;
       image.style.animation = '';
@@ -1235,34 +293,18 @@
     }
   });
 
-  // ============================================================
-  // 1) ANIMACIÓN DEL SOBRE + AUTOPLAY DE AUDIO
-  // ============================================================
   document.getElementById('envelope-trigger').addEventListener('click', function () {
     var envelopeScreen = document.getElementById('envelope-screen');
     var invitation = document.getElementById('invitation');
-    var audio = document.getElementById('bg-music');
 
-    // Intentar reproducir el audio dentro del mismo gesto del usuario (click)
-    // para evitar el bloqueo de autoplay de los navegadores.
-    audio.play().catch(function () {
-      // Si el navegador bloquea el audio (ej. falta el archivo real todavía),
-      // simplemente continuamos sin interrumpir la animación.
-    });
-
-    // Animar apertura del sobre
     envelopeScreen.classList.add('opening');
 
-    // Tras la animación de apertura, ocultar el sobre y mostrar la invitación
     setTimeout(function () {
       envelopeScreen.classList.add('hide');
       invitation.classList.add('show');
     }, 700);
   });
 
-  // ============================================================
-  // 1b) BOTÓN DE PLAY/PAUSE DE LA CANCIÓN
-  // ============================================================
   (function () {
     var audio = document.getElementById('bg-music');
     var songBtn = document.getElementById('song-toggle');
@@ -1286,10 +328,6 @@
     });
   })();
 
-  // ============================================================
-  // 2) CUENTA REGRESIVA EN TIEMPO REAL
-  //    Hacia el 30 de agosto de 2026, 1:00 PM (hora Colombia, UTC-5)
-  // ============================================================
   var eventDate = new Date('2026-08-30T13:00:00-05:00').getTime();
 
   function updateCountdown() {
