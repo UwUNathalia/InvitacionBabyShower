@@ -59,25 +59,23 @@ body{
   pointer-events: none;
 }
 
-.envelope-title-1{
-  font-family: 'Great Vibes', cursive;
-  font-size: 1.9rem;
-  color: #b8863f;
-  text-shadow: 0 1px 3px rgba(255,255,255,0.6);
-  margin: 0 auto 0.2rem;
-  max-width: 300px;
-  line-height: 1.25;
+.envelope-intro{
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: #7a5a3a;
+  text-shadow: 0 1px 2px rgba(255,255,255,0.6);
+  margin: 0 auto 0.8rem;
+  max-width: 270px;
 }
 
-.envelope-title-2{
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: 6px;
-  text-transform: uppercase;
-  color: var(--verde-oscuro);
-  text-shadow: 0 1px 3px rgba(255,255,255,0.5);
-  margin-bottom: 1.4rem;
+.envelope-intro p{
+  margin: 0 0 0.7rem;
+}
+
+.envelope-intro p:last-child{
+  margin-bottom: 0;
 }
 
 .envelope-animal{
