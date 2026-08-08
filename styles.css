@@ -63,12 +63,12 @@ body{
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-weight: 700;
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   line-height: 1.4;
   color: #7a5a3a;
   text-shadow: 0 1px 2px rgba(255,255,255,0.6);
   margin: 0 auto 0.8rem;
-  max-width: 300px;
+  max-width: 320px;
 }
 
 .envelope-intro p{
