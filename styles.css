@@ -694,13 +694,13 @@ body{
 }
 
 .gift-code-result{
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 700;
   min-height: 1.4em;
 }
 
 .gift-code-result.error{
-  color: #b5605a;
+  color: #d31111;
 }
 
 .gift-code-reveal{
