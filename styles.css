@@ -726,8 +726,8 @@ body{
 .gift-code-note{
   text-align: center;
   background: linear-gradient(135deg, #fbc9ce, #f6b8c0);
-  color: var(--blanco-crema);
-  font-weight: 600;
+  color: #d31111;
+  font-weight: 700;
   font-size: 0.9rem;
   letter-spacing: 0.3px;
   padding: 0.7rem 1.2rem;
